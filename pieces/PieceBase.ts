@@ -1,9 +1,9 @@
 import { IRotaror } from "../interfaces/IRotator";
 
 export class PieceBase {
-    protected _name: string;
-    protected _color: string;
-    protected _form: number[][];
+    protected _name: string="";
+    protected _color: string = "";
+    protected _form: number[][]= [];
 
     protected  setName(value:string) {
         this._name = value;
