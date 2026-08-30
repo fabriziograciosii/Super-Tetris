@@ -1,34 +1,44 @@
-import { IRotaror } from "../interfaces/IRotator";
+import { IRotator } from "../interfaces/IRotator";
 
-export class PieceBase {
-    protected _name: string="";
-    protected _color: string = "";
-    protected _form: number[][]= [];
+export class PieceBase implements IRotator {
+  private _name: string = "";
+  private _color: string = "";
+  private _form: number[][] = [];
 
-    protected  setName(value:string) {
-        this._name = value;
-    }
+  constructor() {}
 
-    protected  setColor(value:string) {
-        this._color = value;
-    }
+  protected setName(value: string) {
+    this._name = value;
+  }
 
-    protected  setForm(value:number[][] ) {
-        this._form = value; 
-    }
+  protected setColor(value: string) {
+    this._color = value;
+  }
 
-    getName(): string {
-        return this._name;
-    }
+  protected setForm(value: number[][]) {
+    this._form = value;
+  }
 
-    getColor(): string {
-        return this._color;
-    }
+  getName(): string {
+    return this._name;
+  }
 
-    getForm(): number[][] {
-        return this._form;
-    }
+  getColor(): string {
+    return this._color;
+  }
 
-    constructor() {
-    }
+  getForm(): number[][] {
+    return this._form;
+  }
+
+  rotateRight(): void {
+    const f = this._form;
+    this._form = f[0].map((_, i) => f.map((fila) => fila[i]).reverse());
+  }
+
+  rotateLeft(): void {
+    const f = this._form;
+    const cols = f[0].length;
+    this._form = f[0].map((_, i) => f.map((fila) => fila[cols - 1 - i]));
+  }
 }
