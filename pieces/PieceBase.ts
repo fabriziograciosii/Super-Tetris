@@ -3,7 +3,8 @@ import { IRotator } from "../interfaces/IRotator";
 export class PieceBase implements IRotator {
   private _name: string = "";
   private _color: string = "";
-  private _form: number[][] = [];
+  private _forms: number[][][] = [];
+  private _index: number = 0;
 
   constructor() {}
 
@@ -15,8 +16,9 @@ export class PieceBase implements IRotator {
     this._color = value;
   }
 
-  protected setForm(value: number[][]) {
-    this._form = value;
+  protected setForm(value: number[][][]) {
+    this._forms = value.map((form) => form.map((row) => [...row]));
+    this._index = 0;
   }
 
   getName(): string {
@@ -28,17 +30,14 @@ export class PieceBase implements IRotator {
   }
 
   getForm(): number[][] {
-    return this._form;
+    return this._forms[this._index].map((row) => [...row]);
   }
 
   rotateRight(): void {
-    const f = this._form;
-    this._form = f[0].map((_, i) => f.map((fila) => fila[i]).reverse());
+    this._index = (this._index + 1) % this._forms.length;
   }
 
   rotateLeft(): void {
-    const f = this._form;
-    const cols = f[0].length;
-    this._form = f[0].map((_, i) => f.map((fila) => fila[cols - 1 - i]));
+    this._index = (this._index - 1 + this._forms.length) % this._forms.length;
   }
 }
