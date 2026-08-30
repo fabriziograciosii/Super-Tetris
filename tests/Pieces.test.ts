@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { PieceDogLeft } from "../pieces/PieceDogLeft";
 import { PieceDogRight } from "../pieces/PieceDogRight";
+import { Square } from "../pieces/PieceSquare";
 
 describe("Test de piezas", () => {
   // Piece Dog Left
@@ -70,6 +71,46 @@ describe("Test de piezas", () => {
       [1, 0, 0],
       [1, 1, 0],
       [0, 1, 0],
+    ]);
+  });
+
+  // Piece Square
+  test("Piece Square Creacion", () => {
+    const piecesquare = new Square();
+
+    expect(piecesquare.getName()).toBe("Square");
+    expect(piecesquare.getColor()).toBe("Blue");
+    expect(piecesquare.getForm()).toEqual([
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ]);
+  });
+
+  // El Square sigue manteniendo su posicion original al rotar a la derecha
+  test("Piece Square Rotacion Derecha", () => {
+    const piecesquare = new Square();
+    piecesquare.rotateRight();
+
+    expect(piecesquare.getForm()).toEqual([
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ]);
+  });
+
+  // El Square sigue manteniendo su posicion original al rotar a la izquierda
+  test("Piece Square Rotacion Izquierda", () => {
+    const piecesquare = new Square();
+    piecesquare.rotateLeft();
+
+    expect(piecesquare.getForm()).toEqual([
+      [1, 1, 0, 0],
+      [1, 1, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ]);
   });
 });
