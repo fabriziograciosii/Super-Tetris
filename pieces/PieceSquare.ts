@@ -1,6 +1,6 @@
 import { PieceBase } from "./PieceBase";
 
-export class Square extends PieceBase {
+export class PieceSquare extends PieceBase {
   constructor() {
     super();
     this.setName("Square");
