@@ -3,6 +3,7 @@ import { PieceDogLeft } from "../pieces/PieceDogLeft";
 import { PieceDogRight } from "../pieces/PieceDogRight";
 import { PieceSquare } from "../pieces/PieceSquare";
 import { PieceStick } from "../pieces/PieceStick";
+import { PieceT } from "../pieces/PieceT";
 
 describe("Piece Dog Left", () => {
   test("Creacion", () => {
@@ -152,6 +153,42 @@ describe("Piece Stick", () => {
       [0, 0, 0, 0],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
+    ]);
+  });
+});
+
+describe("Piece T", () => {
+  test("Creacion", () => {
+    const piecet = new PieceT();
+
+    expect(piecet.getName()).toBe("T");
+    expect(piecet.getColor()).toBe("Green");
+    expect(piecet.getForm()).toEqual([
+      [1, 0, 0],
+      [1, 1, 0],
+      [1, 0, 0],
+    ]);
+  });
+
+  test("Rotacion Derecha", () => {
+    const piecet = new PieceT();
+    piecet.rotateRight();
+
+    expect(piecet.getForm()).toEqual([
+      [1, 1, 1],
+      [0, 1, 0],
+      [0, 0, 0],
+    ]);
+  });
+
+  test("Rotacion Izquierda", () => {
+    const piecet = new PieceT();
+    piecet.rotateLeft();
+
+    expect(piecet.getForm()).toEqual([
+      [0, 1, 0],
+      [1, 1, 1],
+      [0, 0, 0],
     ]);
   });
 });
