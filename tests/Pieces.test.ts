@@ -4,6 +4,8 @@ import { PieceDogRight } from "../pieces/PieceDogRight";
 import { PieceSquare } from "../pieces/PieceSquare";
 import { PieceStick } from "../pieces/PieceStick";
 import { PieceT } from "../pieces/PieceT";
+import { PieceLLeft } from "../pieces/PieceLLeft";
+import { PieceLRight } from "../pieces/PieceLRight";
 
 describe("Piece Dog Left", () => {
   test("Creacion", () => {
@@ -187,6 +189,78 @@ describe("Piece T", () => {
 
     expect(piecet.getForm()).toEqual([
       [0, 1, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+  });
+});
+
+describe("Piece L Left", () => {
+  test("Creacion", () => {
+    const piecelleft = new PieceLLeft();
+
+    expect(piecelleft.getName()).toBe("L Left");
+    expect(piecelleft.getColor()).toBe("Yellow");
+    expect(piecelleft.getForm()).toEqual([
+      [0, 1, 0],
+      [0, 1, 0],
+      [1, 1, 0],
+    ]);
+  });
+
+  test("Rotacion Derecha", () => {
+    const piecelleft = new PieceLLeft();
+    piecelleft.rotateRight();
+
+    expect(piecelleft.getForm()).toEqual([
+      [1, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+    ]);
+  });
+
+  test("Rotacion Izquierda", () => {
+    const piecelleft = new PieceLLeft();
+    piecelleft.rotateLeft();
+
+    expect(piecelleft.getForm()).toEqual([
+      [1, 1, 1],
+      [0, 0, 1],
+      [0, 0, 0],
+    ]);
+  });
+});
+
+describe("Piece L Right", () => {
+  test("Creacion", () => {
+    const piecelright = new PieceLRight();
+
+    expect(piecelright.getName()).toBe("L Right");
+    expect(piecelright.getColor()).toBe("Violet");
+    expect(piecelright.getForm()).toEqual([
+      [1, 0, 0],
+      [1, 0, 0],
+      [1, 1, 0],
+    ]);
+  });
+
+  test("Rotacion Derecha", () => {
+    const piecelright = new PieceLRight();
+    piecelright.rotateRight();
+
+    expect(piecelright.getForm()).toEqual([
+      [1, 1, 1],
+      [1, 0, 0],
+      [0, 0, 0],
+    ]);
+  });
+
+  test("Rotacion Izquierda", () => {
+    const piecelright = new PieceLRight();
+    piecelright.rotateLeft();
+
+    expect(piecelright.getForm()).toEqual([
+      [0, 0, 1],
       [1, 1, 1],
       [0, 0, 0],
     ]);
