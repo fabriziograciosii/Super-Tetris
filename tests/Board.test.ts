@@ -33,4 +33,16 @@ describe("Tablero de Tetris", () => {
 
         expect(board.getCurrentPosition()).toEqual({ x: 3, y: 1 });
     });
+
+    test("La pieza no debe atravesar el piso del tablero", () => {
+        const board = new Board();
+        const piece = new PieceSquare();
+        board.spawnPiece(piece);
+
+        for (let i = 0; i < 20; i++) {
+            board.moveDown();
+        }
+
+        expect(board.getCurrentPosition().y).toBe(18);
+    });
 });

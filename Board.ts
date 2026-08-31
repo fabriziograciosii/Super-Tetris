@@ -14,17 +14,40 @@ export class Board {
     return this.grid;
   }
 
-  // Método para hacer nacer la pieza en el centro arriba
   spawnPiece(piece: PieceBase): void {
     this.currentPiece = piece;
-    this.currentPosition = { x: 3, y: 0 }; // x:3 (centro), y:0 (arriba)
+    this.currentPosition = { x: 3, y: 0 }; 
   }
 
   moveDown(): void {
-    this.currentPosition.y += 1;
-    }
+    if (!this.currentPiece) return;
 
-  // Métodos para que el test pueda leer qué pieza hay y dónde está
+    const nextY = this.currentPosition.y + 1;
+    
+    if (this.isValidPosition(this.currentPiece, this.currentPosition.x, nextY)) {
+      this.currentPosition.y = nextY;
+    }
+  }
+
+  private isValidPosition(piece: PieceBase, newX: number, newY: number): boolean {
+    const form = piece.getForm(); 
+
+    for (let row = 0; row < form.length; row++) {
+      for (let col = 0; col < form[row].length; col++) {
+        
+        if (form[row][col] !== 0) {
+          const boardY = newY + row; 
+
+          if (boardY >= 20) {
+            return false; 
+          }
+        }
+      }
+    }
+    return true; 
+  }
+
+
   getCurrentPiece(): PieceBase | null {
     return this.currentPiece;
   }
