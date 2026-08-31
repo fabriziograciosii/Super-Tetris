@@ -45,4 +45,23 @@ describe("Tablero de Tetris", () => {
 
         expect(board.getCurrentPosition().y).toBe(18);
     });
+
+    test("La pieza no debe atravesar las paredes laterales", () => {
+        const board = new Board();
+        const piece = new PieceSquare();
+        board.spawnPiece(piece);
+
+        for (let i = 0; i < 10; i++) {
+            board.moveLeft();
+        }
+
+        expect(board.getCurrentPosition().x).toBe(0);
+
+        for (let i = 0; i < 20; i++) {
+            board.moveRight();
+        }
+
+        expect(board.getCurrentPosition().x).toBe(8);
+
+    });
 });
