@@ -83,5 +83,18 @@ describe("Tablero de Tetris", () => {
         expect(grid[19][3]).toBe(1);
         expect(grid[19][4]).toBe(1);
     });
+
+    test("Debe detectar y eliminar una linea completa", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+        }
+
+        board.clearLines();
+
+        expect(grid[18].every(cell => cell === 0)).toBe(true);
+    });
     
 });

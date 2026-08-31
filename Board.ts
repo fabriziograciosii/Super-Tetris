@@ -60,6 +60,19 @@ export class Board {
     
   }
 
+  clearLines(): void {
+
+    for (let row = this.grid.length - 1; row >= 0; row--) {
+        const isRowComplete = this.grid[row].every(cell => cell !== 0);
+
+        if (isRowComplete) {
+            this.grid.splice(row, 1);
+            this.grid.unshift(Array(10).fill(0));
+            row++;
+        }
+    }
+  }
+
 
 
   moveRight(): void {
