@@ -78,16 +78,21 @@ export class Board {
     this.currentPiece = null;
   }
 
-  clearLines(): void {
+  clearLines(): number {
+    let linesCleared = 0;
+    
     for (let row = this.grid.length - 1; row >= 0; row--) {
         const isRowComplete = this.grid[row].every(cell => cell !== 0);
 
         if (isRowComplete) {
             this.grid.splice(row, 1);
             this.grid.unshift(Array(10).fill(0));
+            
+            linesCleared++;
             row++;
         }
     }
+    return linesCleared;
   }
 
   private isValidPosition(piece: PieceBase, newX: number, newY: number): boolean {

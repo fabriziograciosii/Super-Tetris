@@ -110,5 +110,19 @@ describe("Tablero de Tetris", () => {
 
         expect(isGameOver).toBe(true);
     });
+
+    test("Debe retornar la cantidad de lineas eliminadas al limpiar la grilla", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+            grid[19][col] = 1;
+        }
+
+        const linesCleared = board.clearLines();
+
+        expect(linesCleared).toBe(2);
+    });
     
 });
