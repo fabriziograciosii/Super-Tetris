@@ -20,6 +20,10 @@ export class Board {
     this.currentPosition = { x: 3, y: 0 }; // x:3 (centro), y:0 (arriba)
   }
 
+  moveDown(): void {
+    this.currentPosition.y += 1;
+    }
+
   // Métodos para que el test pueda leer qué pieza hay y dónde está
   getCurrentPiece(): PieceBase | null {
     return this.currentPiece;

@@ -23,4 +23,14 @@ describe("Tablero de Tetris", () => {
         expect(board.getCurrentPiece()).toBe(piece);
         expect(board.getCurrentPosition()).toEqual({ x: 3, y: 0 });
     });
+
+    test("Debe mover la pieza hacia abajo un casillero", () => {
+        const board = new Board();
+        const piece = new PieceSquare();
+
+        board.spawnPiece(piece);
+        board.moveDown();
+
+        expect(board.getCurrentPosition()).toEqual({ x: 3, y: 1 });
+    });
 });
