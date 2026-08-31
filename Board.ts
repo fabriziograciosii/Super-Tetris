@@ -2,7 +2,6 @@ import { PieceBase } from "./pieces/PieceBase";
 
 export class Board {
   private grid: number[][];
-  // Creamos variables para guardar la pieza actual y sus coordenadas
   private currentPiece: PieceBase | null = null;
   private currentPosition: { x: number, y: number } = { x: 0, y: 0 };
 
@@ -16,7 +15,7 @@ export class Board {
 
   spawnPiece(piece: PieceBase): void {
     this.currentPiece = piece;
-    this.currentPosition = { x: 3, y: 0 }; 
+    this.currentPosition = { x: 3, y: 0 };
   }
 
   moveDown(): void {
@@ -29,6 +28,26 @@ export class Board {
     }
   }
 
+  moveLeft(): void {
+    if (!this.currentPiece) return;
+
+    const nextX = this.currentPosition.x - 1;
+    
+    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
+      this.currentPosition.x = nextX;
+    }
+  }
+
+  moveRight(): void {
+    if (!this.currentPiece) return;
+
+    const nextX = this.currentPosition.x + 1;
+    
+    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
+      this.currentPosition.x = nextX;
+    }
+  }
+
   private isValidPosition(piece: PieceBase, newX: number, newY: number): boolean {
     const form = piece.getForm(); 
 
@@ -37,16 +56,22 @@ export class Board {
         
         if (form[row][col] !== 0) {
           const boardY = newY + row; 
+          const boardX = newX + col; 
 
           if (boardY >= 20) {
             return false; 
+          }
+          if (boardX < 0) {
+            return false;
+          }
+          if (boardX >= 10) {
+            return false;
           }
         }
       }
     }
     return true; 
   }
-
 
   getCurrentPiece(): PieceBase | null {
     return this.currentPiece;
