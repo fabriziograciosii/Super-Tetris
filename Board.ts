@@ -13,9 +13,18 @@ export class Board {
     return this.grid;
   }
 
-  spawnPiece(piece: PieceBase): void {
+  spawnPiece(piece: PieceBase): boolean {
+    const startX = 3;
+    const startY = 0;
+
+    // Verificamos si hay espacio antes de spawnear
+    if (!this.isValidPosition(piece, startX, startY)) {
+      return true; // ¡Game Over!
+    }
+
     this.currentPiece = piece;
-    this.currentPosition = { x: 3, y: 0 };
+    this.currentPosition = { x: startX, y: startY };
+    return false; // Todo normal
   }
 
   moveDown(): void {
@@ -32,6 +41,16 @@ export class Board {
     if (!this.currentPiece) return;
 
     const nextX = this.currentPosition.x - 1;
+    
+    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
+      this.currentPosition.x = nextX;
+    }
+  }
+
+  moveRight(): void {
+    if (!this.currentPiece) return;
+
+    const nextX = this.currentPosition.x + 1;
     
     if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
       this.currentPosition.x = nextX;
@@ -57,11 +76,9 @@ export class Board {
     }
 
     this.currentPiece = null;
-    
   }
 
   clearLines(): void {
-
     for (let row = this.grid.length - 1; row >= 0; row--) {
         const isRowComplete = this.grid[row].every(cell => cell !== 0);
 
@@ -70,18 +87,6 @@ export class Board {
             this.grid.unshift(Array(10).fill(0));
             row++;
         }
-    }
-  }
-
-
-
-  moveRight(): void {
-    if (!this.currentPiece) return;
-
-    const nextX = this.currentPosition.x + 1;
-    
-    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
-      this.currentPosition.x = nextX;
     }
   }
 
@@ -95,13 +100,13 @@ export class Board {
           const boardY = newY + row; 
           const boardX = newX + col; 
 
-          if (boardY >= 20) {
+          // 1. Validar límites de la pantalla
+          if (boardX < 0 || boardX >= 10 || boardY < 0 || boardY >= 20) {
             return false; 
           }
-          if (boardX < 0) {
-            return false;
-          }
-          if (boardX >= 10) {
+
+          // 2. ¡NUEVO! Validar si la celda del tablero ya está ocupada por otra pieza fija
+          if (this.grid[boardY][boardX] !== 0) {
             return false;
           }
         }

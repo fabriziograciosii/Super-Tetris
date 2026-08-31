@@ -96,5 +96,19 @@ describe("Tablero de Tetris", () => {
 
         expect(grid[18].every(cell => cell === 0)).toBe(true);
     });
+
+    test("Debe detectar Game Over si la pieza no puede ser colocada en la grilla", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[0][col] = 1;
+        }
+
+        const piece = new PieceSquare();
+        const isGameOver = board.spawnPiece(piece);
+
+        expect(isGameOver).toBe(true);
+    });
     
 });
