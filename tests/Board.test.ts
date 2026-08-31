@@ -64,4 +64,24 @@ describe("Tablero de Tetris", () => {
         expect(board.getCurrentPosition().x).toBe(8);
 
     });
+
+    test("Debe fijarse la pieza en la grilla del tablero", () => {
+        const board = new Board();
+        const piece = new PieceSquare();
+        board.spawnPiece(piece);
+
+        for (let i = 0; i < 25; i++) {
+            board.moveDown();
+        }
+
+        board.lockPiece();
+
+        const grid = board.getGrid();
+
+        expect(grid[18][3]).toBe(1);
+        expect(grid[18][4]).toBe(1);
+        expect(grid[19][3]).toBe(1);
+        expect(grid[19][4]).toBe(1);
+    });
+    
 });

@@ -38,6 +38,30 @@ export class Board {
     }
   }
 
+  lockPiece(): void {
+    if (!this.currentPiece) return;
+    
+    const form = this.currentPiece.getForm();
+    const { x, y } = this.currentPosition;
+
+    for (let row = 0; row < form.length; row++) {
+        for (let col = 0; col < form[row].length; col++) {
+
+            if (form[row][col] !== 0) {
+                const boardY = y + row;
+                const boardX = x + col;
+
+                this.grid[boardY][boardX] = form[row][col];
+            }
+        }
+    }
+
+    this.currentPiece = null;
+    
+  }
+
+
+
   moveRight(): void {
     if (!this.currentPiece) return;
 
