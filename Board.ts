@@ -4,6 +4,7 @@ export class Board {
   private grid: number[][];
   private currentPiece: PieceBase | null = null;
   private currentPosition: { x: number, y: number } = { x: 0, y: 0 };
+  private score: number = 0;
 
   constructor() {
     this.grid = Array.from({ length: 20 }, () => Array(10).fill(0));
@@ -92,6 +93,17 @@ export class Board {
             row++;
         }
     }
+
+    if (linesCleared === 1) {
+        this.score += 100;
+    } else if (linesCleared === 2) {
+        this.score += 300;
+    } else if (linesCleared === 3) {
+        this.score += 500;
+    } else if (linesCleared >= 4) {
+        this.score += 800;
+    }
+
     return linesCleared;
   }
 
@@ -126,5 +138,9 @@ export class Board {
 
   getCurrentPosition(): { x: number, y: number } {
     return this.currentPosition;
+  }
+
+  getScore(): number {
+    return this.score;
   }
 }

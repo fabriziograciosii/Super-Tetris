@@ -124,5 +124,19 @@ describe("Tablero de Tetris", () => {
 
         expect(linesCleared).toBe(2);
     });
+
+    test("Debe acumular puntos segun la cantidad de lineas eliminadas", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+            grid[19][col] = 1;
+        }
+
+        board.clearLines();
+
+        expect(board.getScore()).toBe(300);
+    });
     
 });
