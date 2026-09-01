@@ -17,64 +17,43 @@ export class Board {
   spawnPiece(piece: PieceBase): boolean {
     const startX = 3;
     const startY = 0;
-
-    // Verificamos si hay espacio antes de spawnear
-    if (!this.isValidPosition(piece, startX, startY)) {
-      return true; // ¡Game Over!
-    }
-
-    this.currentPiece = piece;
-    this.currentPosition = { x: startX, y: startY };
-    return false; // Todo normal
+    const isInvalid = !this.isValidPosition(piece, startX, startY);
+    
+    !isInvalid ? (this.currentPiece = piece, this.currentPosition = { x: startX, y: startY }) : null;
+    
+    return isInvalid;
   }
 
   moveDown(): void {
-    if (!this.currentPiece) return;
-
     const nextY = this.currentPosition.y + 1;
-    
-    if (this.isValidPosition(this.currentPiece, this.currentPosition.x, nextY)) {
-      this.currentPosition.y = nextY;
-    }
+    this.currentPiece && this.isValidPosition(this.currentPiece, this.currentPosition.x, nextY) 
+        ? (this.currentPosition.y = nextY) 
+        : null;
   }
 
   moveLeft(): void {
-    if (!this.currentPiece) return;
-
     const nextX = this.currentPosition.x - 1;
-    
-    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
-      this.currentPosition.x = nextX;
-    }
+    this.currentPiece && this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y) 
+        ? (this.currentPosition.x = nextX) 
+        : null;
   }
 
   moveRight(): void {
-    if (!this.currentPiece) return;
-
     const nextX = this.currentPosition.x + 1;
-    
-    if (this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y)) {
-      this.currentPosition.x = nextX;
-    }
+    this.currentPiece && this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y) 
+        ? (this.currentPosition.x = nextX) 
+        : null;
   }
 
   lockPiece(): void {
-    if (!this.currentPiece) return;
-    
-    const form = this.currentPiece.getForm();
+    const form = this.currentPiece?.getForm() || [];
     const { x, y } = this.currentPosition;
 
-    for (let row = 0; row < form.length; row++) {
-        for (let col = 0; col < form[row].length; col++) {
-
-            if (form[row][col] !== 0) {
-                const boardY = y + row;
-                const boardX = x + col;
-
-                this.grid[boardY][boardX] = form[row][col];
-            }
-        }
-    }
+    form.forEach((rowArr, row) => {
+        rowArr.forEach((cell, col) => {
+            cell !== 0 ? (this.grid[y + row][x + col] = cell) : null;
+        });
+    });
 
     this.currentPiece = null;
   }
@@ -84,52 +63,26 @@ export class Board {
     
     for (let row = this.grid.length - 1; row >= 0; row--) {
         const isRowComplete = this.grid[row].every(cell => cell !== 0);
-
-        if (isRowComplete) {
-            this.grid.splice(row, 1);
-            this.grid.unshift(Array(10).fill(0));
-            
-            linesCleared++;
-            row++;
-        }
+        isRowComplete 
+            ? (this.grid.splice(row, 1), this.grid.unshift(Array(10).fill(0)), linesCleared++, row++) 
+            : null;
     }
 
-    if (linesCleared === 1) {
-        this.score += 100;
-    } else if (linesCleared === 2) {
-        this.score += 300;
-    } else if (linesCleared === 3) {
-        this.score += 500;
-    } else if (linesCleared >= 4) {
-        this.score += 800;
-    }
+    const scoreKeys: Record<number, number> = { 0: 0, 1: 100, 2: 300, 3: 500 };
+    this.score += linesCleared >= 4 ? 800 : (scoreKeys[linesCleared] || 0);
 
     return linesCleared;
   }
 
   private isValidPosition(piece: PieceBase, newX: number, newY: number): boolean {
-    const form = piece.getForm(); 
-
-    for (let row = 0; row < form.length; row++) {
-      for (let col = 0; col < form[row].length; col++) {
-        
-        if (form[row][col] !== 0) {
-          const boardY = newY + row; 
-          const boardX = newX + col; 
-
-          // 1. Validar límites de la pantalla
-          if (boardX < 0 || boardX >= 10 || boardY < 0 || boardY >= 20) {
-            return false; 
-          }
-
-          // 2. ¡NUEVO! Validar si la celda del tablero ya está ocupada por otra pieza fija
-          if (this.grid[boardY][boardX] !== 0) {
-            return false;
-          }
-        }
-      }
-    }
-    return true; 
+    return !piece.getForm().some((row, r) => 
+        row.some((cell, c) => {
+            const boardY = newY + r;
+            const boardX = newX + c;
+            const outOfBounds = boardX < 0 || boardX >= 10 || boardY < 0 || boardY >= 20;
+            return cell !== 0 && (outOfBounds || this.grid[boardY][boardX] !== 0);
+        })
+    );
   }
 
   getCurrentPiece(): PieceBase | null {
