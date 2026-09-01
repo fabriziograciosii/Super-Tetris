@@ -83,5 +83,60 @@ describe("Tablero de Tetris", () => {
         expect(grid[19][3]).toBe(1);
         expect(grid[19][4]).toBe(1);
     });
+
+    test("Debe detectar y eliminar una linea completa", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+        }
+
+        board.clearLines();
+
+        expect(grid[18].every(cell => cell === 0)).toBe(true);
+    });
+
+    test("Debe detectar Game Over si la pieza no puede ser colocada en la grilla", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[0][col] = 1;
+        }
+
+        const piece = new PieceSquare();
+        const isGameOver = board.spawnPiece(piece);
+
+        expect(isGameOver).toBe(true);
+    });
+
+    test("Debe retornar la cantidad de lineas eliminadas al limpiar la grilla", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+            grid[19][col] = 1;
+        }
+
+        const linesCleared = board.clearLines();
+
+        expect(linesCleared).toBe(2);
+    });
+
+    test("Debe acumular puntos segun la cantidad de lineas eliminadas", () => {
+        const board = new Board();
+        const grid = board.getGrid();
+
+        for (let col = 0; col < 10; col++) {
+            grid[18][col] = 1;
+            grid[19][col] = 1;
+        }
+
+        board.clearLines();
+
+        expect(board.getScore()).toBe(300);
+    });
     
 });
