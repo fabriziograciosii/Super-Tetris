@@ -43,4 +43,18 @@ describe("Controlador principal del juego Tetris", () => {
     // Si limpió 2 líneas y el objetivo era 2, el juego debe terminar
     expect(tetris.state()).toBe(false); 
   });
+
+  test("Al iniciar el juego, debe spawnear una pieza aleatoria en el tablero", () => {
+    const tetris = new Tetris();
+    const board = tetris.getBoard();
+
+    expect(board.getCurrentPiece()).toBeNull(); 
+    
+    tetris.start();
+    
+    const currentPiece = board.getCurrentPiece();
+
+    expect(currentPiece).not.toBeNull();
+    expect(currentPiece?.getForm().length).toBeGreaterThan(0); 
+  });
 });
