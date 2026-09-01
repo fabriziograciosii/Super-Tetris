@@ -3,7 +3,7 @@ import { PieceBase } from "./pieces/PieceBase";
 export class Board {
   private grid: number[][];
   private currentPiece: PieceBase | null = null;
-  private currentPosition: { x: number, y: number } = { x: 0, y: 0 };
+  private currentPosition: { x: number; y: number } = { x: 0, y: 0 };
   private score: number = 0;
 
   constructor() {
@@ -15,27 +15,26 @@ export class Board {
     this.grid = newgrid;
     return this.grid;
   }
-  getGrid(): number[][] {
+
+  public getGrid(): number[][] {
     return this.grid;
   }
 
-  protected setcurrentPiece(): PieceBase | null {
-    const newPiece: PieceBase | null = null;
-    this.currentPiece = newPiece;
+  protected setCurrentPiece(piece: PieceBase | null): PieceBase | null {
+    this.currentPiece = piece;
     return this.currentPiece;
   }
 
-  getcurrentPiece(): PieceBase | null {
+  public getCurrentPiece(): PieceBase | null {
     return this.currentPiece;
   }
 
-  protected setcurrentPosition(x: number, y: number): { x: number, y: number } {
-    const newPosition = { x, y };
-    this.currentPosition = newPosition;
+  protected setCurrentPosition(x: number, y: number): { x: number; y: number } {
+    this.currentPosition = { x, y };
     return this.currentPosition;
   }
 
-  getcurrentPosition(): { x: number, y: number } {
+  public getCurrentPosition(): { x: number; y: number } {
     return this.currentPosition;
   }
 
@@ -43,42 +42,42 @@ export class Board {
     this.score = value;
   }
 
-  getScore(): number {
+  public getScore(): number {
     return this.score;
   }
 
-  spawnPiece(piece: PieceBase): boolean {
+  public spawnPiece(piece: PieceBase): boolean {
     const startX = 3;
     const startY = 0;
     const isInvalid = !this.isValidPosition(piece, startX, startY);
     
-    !isInvalid ? (this.currentPiece = piece, this.currentPosition = { x: startX, y: startY }) : null;
+    !isInvalid ? (this.setCurrentPiece(piece), this.setCurrentPosition(startX, startY)) : null;
     
     return isInvalid;
   }
 
-  moveDown(): void {
+  public moveDown(): void {
     const nextY = this.currentPosition.y + 1;
     this.currentPiece && this.isValidPosition(this.currentPiece, this.currentPosition.x, nextY) 
         ? (this.currentPosition.y = nextY) 
         : null;
   }
 
-  moveLeft(): void {
+  public moveLeft(): void {
     const nextX = this.currentPosition.x - 1;
     this.currentPiece && this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y) 
         ? (this.currentPosition.x = nextX) 
         : null;
   }
 
-  moveRight(): void {
+  public moveRight(): void {
     const nextX = this.currentPosition.x + 1;
     this.currentPiece && this.isValidPosition(this.currentPiece, nextX, this.currentPosition.y) 
         ? (this.currentPosition.x = nextX) 
         : null;
   }
 
-  lockPiece(): void {
+  public lockPiece(): void {
     const form = this.currentPiece?.getForm() || [];
     const { x, y } = this.currentPosition;
 
@@ -88,10 +87,10 @@ export class Board {
         });
     });
 
-    this.currentPiece = null;
+    this.setCurrentPiece(null);
   }
 
-  clearLines(): number {
+  public clearLines(): number {
     let linesCleared = 0;
     
     for (let row = this.grid.length - 1; row >= 0; row--) {
@@ -101,8 +100,18 @@ export class Board {
             : null;
     }
 
-    const scoreKeys: Record<number, number> = { 0: 0, 1: 100, 2: 300, 3: 500 };
-    this.score += linesCleared >= 4 ? 800 : (scoreKeys[linesCleared] || 0);
+    // Cálculo de puntos usando ternarios puros (sin diccionarios ni 'if')
+    const earnedScore = linesCleared === 1 
+        ? 100 
+        : linesCleared === 2 
+        ? 300 
+        : linesCleared === 3 
+        ? 500 
+        : linesCleared >= 4 
+        ? 800 
+        : 0;
+
+    this.score += earnedScore;
 
     return linesCleared;
   }
@@ -117,14 +126,4 @@ export class Board {
         })
     );
   }
-
-  getCurrentPiece(): PieceBase | null {
-    return this.currentPiece;
-  }
-
-  getCurrentPosition(): { x: number, y: number } {
-    return this.currentPosition;
-  }
-
-
 }

@@ -10,7 +10,7 @@ export class Clock {
     this._intervalId = null; 
   }
 
-  start(): void {
+  public start(): void {
     this._intervalId !== null 
         ? null 
         : (this._intervalId = setInterval(() => {
@@ -19,25 +19,50 @@ export class Clock {
           }, this._tickRate));
   }
 
-   stop(): void {
+  public stop(): void {
     this._intervalId !== null 
         ? (clearInterval(this._intervalId), this._intervalId = null) 
         : null;
   }
 
-   setSpeed(newTickRate: number): void {
-    this._tickRate = newTickRate;
+  public setSpeed(newTickRate: number): void {
+    this.setTickRate(newTickRate);
     this._intervalId !== null ? (this.stop(), this.start()) : null;
   }
 
   protected setTickRate(newTickRate: number): void {
     this._tickRate = newTickRate;
   }
-
-  getTickRate(): number {
+  
+  public getTickRate(): number {
     return this._tickRate;
   }
-   getTicks(): number {
+
+  public getTicks(): number {
+    return this._ticksCount;
+  }
+
+  protected setOnTick(newOnTick: () => void): void {
+    this._onTick = newOnTick;
+  }
+
+  public getOnTick(): () => void {
+    return this._onTick;
+  }
+
+  protected setIntervalId(newIntervalId: ReturnType<typeof setInterval> | null): void {
+    this._intervalId = newIntervalId;
+  }
+
+  public getIntervalId(): ReturnType<typeof setInterval> | null {
+    return this._intervalId;
+  }
+
+  protected setTicksCount(newTicksCount: number): void {
+    this._ticksCount = newTicksCount;
+  }
+
+  public getTicksCount(): number {
     return this._ticksCount;
   }
 }

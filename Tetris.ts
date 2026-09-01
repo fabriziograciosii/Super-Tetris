@@ -35,7 +35,7 @@ export class Tetris {
     return randomPiece;
   }
 
-  start(): void {
+  public start(): void {
     this.isRunning = true;
     this.totalLinesCleared = 0;
     const initialPiece = this.getRandomPiece();
@@ -43,29 +43,29 @@ export class Tetris {
     this.clock.start();
   }
 
-  tick(): void {
+  public tick(): void {
     this.isRunning ? this.board.moveDown() : null;
   }
 
-  rotateLeft(): void {
+  public rotateLeft(): void {
     const piece = this.board.getCurrentPiece();
     piece ? piece.rotateLeft() : null;
   }
 
-  rotateRight(): void {
+  public rotateRight(): void {
     const piece = this.board.getCurrentPiece();
     piece ? piece.rotateRight() : null;
   }
 
-  state(): boolean {
+  public state(): boolean {
     return this.isRunning;
   }
 
-  getBoard(): Board {
+  public getBoard(): Board {
     return this.board;
   }
 
-  checkWinCondition(linesClearedThisTurn: number): void {
+  public checkWinCondition(linesClearedThisTurn: number): void {
     this.totalLinesCleared += linesClearedThisTurn;
     const gameWon = this.totalLinesCleared >= this.linesToWin;
     this.isRunning = gameWon ? false : this.isRunning;
