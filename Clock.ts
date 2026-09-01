@@ -3,6 +3,7 @@ export class Clock {
   private _tickRate: number;
   private _onTick: () => void;
   private _intervalId: ReturnType<typeof setInterval> | null;
+  private _ticksCount: number = 0; 
 
 
   constructor(tickRate: number, onTick: () => void) {
@@ -18,7 +19,10 @@ export class Clock {
     if (this._intervalId !== null) return; 
     
     // Guardamos el ID del intervalo para poder frenarlo después
-    this._intervalId = setInterval(this._onTick, this._tickRate);
+    this._intervalId = setInterval(() => {
+      this._ticksCount++; // Suma 1 a nuestro contador
+      this._onTick();
+    }, this._tickRate);
   }
 
   public stop(): void {
@@ -36,5 +40,10 @@ export class Clock {
       this.stop();
       this.start();
     }
+  }
+
+  // AGREGADO: Método para que Vitest pueda leer cuántos ticks pasaron (Requerimiento Test 4)
+  public getTicks(): number {
+    return this._ticksCount;
   }
 }
