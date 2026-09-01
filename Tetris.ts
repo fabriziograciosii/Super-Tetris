@@ -7,34 +7,33 @@ import { PieceLRight } from "./pieces/PieceLRight";
 import { PieceSquare } from "./pieces/PieceSquare";
 import { PieceStick } from "./pieces/PieceStick";
 import { PieceT } from "./pieces/PieceT";
+import { Clock } from "./Clock"; // 1. IMPORTAMOS EL RELOJ
 
 export class Tetris {
   private board: Board;
   private isRunning: boolean = false;
   private linesToWin: number;
   private totalLinesCleared: number = 0;
+  private clock: Clock; // 2. RESPETAMOS EL UML AGREGANDO EL ATRIBUTO
 
   constructor(linesToWin: number = 5) {
     this.board = new Board();
     this.linesToWin = linesToWin;
+    
+    // 3. INICIALIZAMOS EL RELOJ: le pasamos 1000ms (1 segundo) y le decimos que llame a nuestro tick()
+    this.clock = new Clock(1000, () => this.tick());
   }
 
-  // Método privado para generar piezas y rotarlas al azar sin romper el UML
   private getRandomPiece(): PieceBase {
     const pieces = [
       new PieceDogLeft(), new PieceDogRight(), new PieceLLeft(),
       new PieceLRight(), new PieceSquare(), new PieceStick(), new PieceT()
     ];
-    
-    // Elegimos una al azar
     const randomPiece = pieces[Math.floor(Math.random() * pieces.length)];
-    
-    // La rotamos aleatoriamente (entre 0 y 3 veces)
     const randomRotations = Math.floor(Math.random() * 4);
     for (let i = 0; i < randomRotations; i++) {
       randomPiece.rotateRight();
     }
-    
     return randomPiece;
   }
 
@@ -42,9 +41,11 @@ export class Tetris {
     this.isRunning = true;
     this.totalLinesCleared = 0;
     
-    // Ahora usamos nuestro método interno en lugar de fijar siempre el Square
     const initialPiece = this.getRandomPiece();
     this.board.spawnPiece(initialPiece);
+    
+    // 4. ¡ARRANCAMOS EL RELOJ PARA QUE LAS PIEZAS EMPIECEN A CAER!
+    this.clock.start();
   }
 
   tick(): void {
@@ -78,6 +79,7 @@ export class Tetris {
     this.totalLinesCleared += linesClearedThisTurn;
     if (this.totalLinesCleared >= this.linesToWin) {
       this.isRunning = false; 
+      this.clock.stop(); // Si ganamos, apagamos el reloj para que deje de correr
     }
   }
 }
