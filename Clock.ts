@@ -10,7 +10,7 @@ export class Clock {
     this._intervalId = null; 
   }
 
-  public start(): void {
+  start(): void {
     this._intervalId !== null 
         ? null 
         : (this._intervalId = setInterval(() => {
@@ -19,18 +19,25 @@ export class Clock {
           }, this._tickRate));
   }
 
-  public stop(): void {
+   stop(): void {
     this._intervalId !== null 
         ? (clearInterval(this._intervalId), this._intervalId = null) 
         : null;
   }
 
-  public setSpeed(newTickRate: number): void {
+   setSpeed(newTickRate: number): void {
     this._tickRate = newTickRate;
     this._intervalId !== null ? (this.stop(), this.start()) : null;
   }
 
-  public getTicks(): number {
+  protected setTickRate(newTickRate: number): void {
+    this._tickRate = newTickRate;
+  }
+
+  getTickRate(): number {
+    return this._tickRate;
+  }
+   getTicks(): number {
     return this._ticksCount;
   }
 }

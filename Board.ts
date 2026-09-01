@@ -7,11 +7,44 @@ export class Board {
   private score: number = 0;
 
   constructor() {
-    this.grid = Array.from({ length: 20 }, () => Array(10).fill(0));
+    this.grid = this.setGrid();
   }
 
+  protected setGrid(): number[][] {
+    const newgrid = Array.from({ length: 20 }, () => Array(10).fill(0));
+    this.grid = newgrid;
+    return this.grid;
+  }
   getGrid(): number[][] {
     return this.grid;
+  }
+
+  protected setcurrentPiece(): PieceBase | null {
+    const newPiece: PieceBase | null = null;
+    this.currentPiece = newPiece;
+    return this.currentPiece;
+  }
+
+  getcurrentPiece(): PieceBase | null {
+    return this.currentPiece;
+  }
+
+  protected setcurrentPosition(x: number, y: number): { x: number, y: number } {
+    const newPosition = { x, y };
+    this.currentPosition = newPosition;
+    return this.currentPosition;
+  }
+
+  getcurrentPosition(): { x: number, y: number } {
+    return this.currentPosition;
+  }
+
+  protected setScore(value: number): void {
+    this.score = value;
+  }
+
+  getScore(): number {
+    return this.score;
   }
 
   spawnPiece(piece: PieceBase): boolean {
@@ -93,7 +126,5 @@ export class Board {
     return this.currentPosition;
   }
 
-  getScore(): number {
-    return this.score;
-  }
+
 }
