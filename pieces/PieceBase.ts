@@ -11,6 +11,7 @@ export class PieceBase implements IRotator {
   protected setName(value: string) {
     this._name = value;
   }
+  
 
   protected setColor(value: string) {
     this._color = value;
