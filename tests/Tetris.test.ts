@@ -54,4 +54,5 @@ describe("Controlador principal del juego Tetris", () => {
     tetris.rotateRight();
     expect(tetris.getBoard().getCurrentPiece()).not.toBeNull(); 
   });
+
 });

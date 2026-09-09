@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1788292811834" clover="3.2.0">
-  <project timestamp="1788292811834" name="All files">
+<coverage generated="1788888746684" clover="3.2.0">
+  <project timestamp="1788888746684" name="All files">
     <metrics statements="133" coveredstatements="125" conditionals="52" coveredconditionals="40" methods="65" coveredmethods="56" elements="250" coveredelements="221" complexity="0" loc="133" ncloc="133" packages="2" files="11" classes="11"/>
     <package name="Super-Tetris">
       <metrics statements="92" coveredstatements="84" conditionals="52" coveredconditionals="40" methods="46" coveredmethods="37"/>
@@ -47,11 +47,11 @@
         <line num="114" count="4" type="stmt"/>
         <line num="116" count="4" type="stmt"/>
         <line num="120" count="88" type="stmt"/>
-        <line num="121" count="269" type="stmt"/>
-        <line num="122" count="986" type="stmt"/>
-        <line num="123" count="986" type="stmt"/>
-        <line num="124" count="986" type="cond" truecount="4" falsecount="0"/>
-        <line num="125" count="986" type="cond" truecount="3" falsecount="0"/>
+        <line num="121" count="270" type="stmt"/>
+        <line num="122" count="993" type="stmt"/>
+        <line num="123" count="993" type="stmt"/>
+        <line num="124" count="993" type="cond" truecount="4" falsecount="0"/>
+        <line num="125" count="993" type="cond" truecount="3" falsecount="0"/>
       </file>
       <file name="Clock.ts" path="/Users/fabriziograciosi/Facultad/2año 2do cuatrimestre /PARADIGMAS II /Mes 1/Super-Tetris/Clock.ts">
         <metrics statements="19" coveredstatements="12" conditionals="6" coveredconditionals="3" methods="14" coveredmethods="7"/>
@@ -86,7 +86,7 @@
         <line num="30" count="5" type="stmt"/>
         <line num="31" count="5" type="stmt"/>
         <line num="32" count="5" type="stmt"/>
-        <line num="33" count="12" type="stmt"/>
+        <line num="33" count="13" type="stmt"/>
         <line num="35" count="5" type="stmt"/>
         <line num="39" count="5" type="stmt"/>
         <line num="40" count="5" type="stmt"/>
@@ -115,14 +115,14 @@
         <line num="6" count="62" type="stmt"/>
         <line num="7" count="62" type="stmt"/>
         <line num="12" count="62" type="stmt"/>
-        <line num="16" count="62" type="stmt"/>
-        <line num="20" count="504" type="stmt"/>
-        <line num="21" count="62" type="stmt"/>
-        <line num="25" count="7" type="stmt"/>
-        <line num="29" count="7" type="stmt"/>
-        <line num="33" count="423" type="stmt"/>
-        <line num="37" count="20" type="stmt"/>
-        <line num="41" count="8" type="stmt"/>
+        <line num="17" count="62" type="stmt"/>
+        <line num="21" count="504" type="stmt"/>
+        <line num="22" count="62" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="34" count="424" type="stmt"/>
+        <line num="38" count="21" type="stmt"/>
+        <line num="42" count="8" type="stmt"/>
       </file>
       <file name="PieceDogLeft.ts" path="/Users/fabriziograciosi/Facultad/2año 2do cuatrimestre /PARADIGMAS II /Mes 1/Super-Tetris/pieces/PieceDogLeft.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
